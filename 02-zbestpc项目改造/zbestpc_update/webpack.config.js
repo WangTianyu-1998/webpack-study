@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { ProvidePlugin } = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = {
   mode: 'development',
   // 入口
@@ -11,6 +12,18 @@ module.exports = {
   output: {
     filename: 'js/[name].js',
     path: path.resolve(__dirname, './dist'),
+  },
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
+    port: 3000,
+    // 服务器压缩
+    compress: true,
+    // 自动打开浏览器
+    open: true,
+    // 开启热更新
+    hot: true,
   },
   module: {
     rules: [
@@ -53,6 +66,15 @@ module.exports = {
     new ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
+    }),
+    // 从.. 拷贝文件 至..
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, './src/img'),
+          to: path.resolve(__dirname, './dist/img'),
+        },
+      ],
     }),
   ],
 }
