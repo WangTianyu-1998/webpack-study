@@ -33,10 +33,17 @@ module.exports = {
     ],
   },
   plugins: [
+    // 配置首页资源
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './src/index.html',
     }),
+    // 配置登录页面资源
+    new HtmlWebpackPlugin({
+      filename: 'login.html',
+      template: './src/login.html',
+    }),
+    // 路径别名
     new ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
