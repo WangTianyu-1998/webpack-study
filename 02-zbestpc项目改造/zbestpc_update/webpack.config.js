@@ -3,7 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { ProvidePlugin } = require('webpack')
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  // 入口
+  entry: {
+    index: './src/index.js',
+    login: './src/login.js',
+  },
   output: {
     filename: 'js/[name].js',
     path: path.resolve(__dirname, './dist'),
@@ -37,11 +41,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './src/index.html',
+      chunks: ['index'],
     }),
     // 配置登录页面资源
     new HtmlWebpackPlugin({
       filename: 'login.html',
       template: './src/login.html',
+      chunks: ['login'],
     }),
     // 路径别名
     new ProvidePlugin({
