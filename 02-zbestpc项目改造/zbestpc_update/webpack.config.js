@@ -1,7 +1,17 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+// 路径别名
 const { ProvidePlugin } = require('webpack')
+// 拷贝文件
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+// 将 CSS 提取到单独的文件中，为每个包含 CSS 的 JS 文件创建一个 CSS 文件
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// js压缩
+const TerserPlugin = require('terser-webpack-plugin')
+// css压缩
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+//
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 module.exports = {
   mode: 'development',
   // 入口
@@ -29,7 +39,8 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        // use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         // 打包文件
@@ -47,7 +58,51 @@ module.exports = {
           filename: 'images/[name].[hash:6][ext]',
         },
       },
+      // ejs 复用模版
+      {
+        test: /\.ejs$/,
+        loader: 'ejs-loader',
+        options: {
+          esModule: false,
+        },
+      },
     ],
+  },
+  optimization: {
+    // 是否开启代码压缩
+    minimize: true,
+    // 代码优化
+    minimizer: [
+      // js 代码压缩
+      new TerserPlugin({ parallel: true }),
+      // css代码压缩
+      new CssMinimizerPlugin(),
+    ],
+    // 代码分割
+    splitChunks: {
+      // 代码最小的分割大小
+      minSize: 300 * 1024,
+      // async 异步代码分割 initial 同步代码分割 all 同步异步代码分割都开启
+      chunks: 'all',
+      // 名称
+      name: 'common',
+      // 这里可以继续打包第三方库
+      cacheGroups: {
+        lodash: {
+          test: /lodash-es/,
+          name: 'lodash-es',
+          // 优先级
+          // priority:10,
+          chunks: 'all',
+        },
+        jquery: {
+          test: /jquery/,
+          name: 'jquery',
+          // priority: 10,
+          chunks: 'all',
+        },
+      },
+    },
   },
   plugins: [
     // 配置首页资源
@@ -76,5 +131,11 @@ module.exports = {
         },
       ],
     }),
+    // css压缩
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css',
+      chunkFilename: 'css/[name].chunk.css',
+    }),
+    new CleanWebpackPlugin(),
   ],
 }

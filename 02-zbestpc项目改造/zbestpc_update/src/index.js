@@ -6,3 +6,6 @@ import 'jquery'
 import 'flexslider'
 import './js/public'
 import './js/nav'
+
+import _ from 'lodash-es'
+console.log(_.get({ a: 1 }, 'a'))
