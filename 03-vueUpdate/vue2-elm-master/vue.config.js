@@ -22,9 +22,54 @@ const AddAssetHtmlWebpackPlugin = require("add-asset-html-webpack-plugin");
 // CPU线程数
 console.log(require("os").cpus(), "require('os').cpus()");
 
+const glob = require('glob');
+const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
+const PATHS = {
+  src: path.join(__dirname, "src"),
+};
+
+
 module.exports = {
   // parallel: true,
   configureWebpack: smp.wrap({
+    // module:{
+    //   rules: [{
+    //     test: /\.(gif|png|jpe?g|svg)$/i,
+    //     use: [
+    //       {
+    //         loader: 'image-webpack-loader',
+    //         options: {
+    //           mozjpeg: {
+    //             progressive: true,
+    //           },
+    //           // optipng.enabled: false will disable optipng
+    //           optipng: {
+    //             enabled: false,
+    //           },
+    //           pngquant: {
+    //             quality: [0.65, 0.90],
+    //             speed: 4
+    //           },
+    //           gifsicle: {
+    //             interlaced: false,
+    //           },
+    //           // the webp option will enable WEBP
+    //           webp: {
+    //             quality: 75
+    //           }
+    //         }
+    //       },
+    //     ],
+    //   }]
+    // },
+    // 缓存生成的 webpack 模块和 chunk，来改善构建速度。
+    cache:{
+      type:'filesystem',
+      // 指定缓存至目录
+      cacheDirectory: path.resolve(__dirname, './node_modules/cache_temp'),
+      // 指定缓存文件的名字
+      name:'vue3-filesystem'
+    }, 
     mode: "production",
 
     resolve: {
@@ -75,6 +120,10 @@ module.exports = {
       // 在模版中引入拆分的第三方包
       new AddAssetHtmlWebpackPlugin({
         filepath: path.resolve(__dirname, "./dll/vue.dll.js"),
+      }),
+      // 
+      new PurgeCSSPlugin({
+        paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
       }),
     ],
   }),
