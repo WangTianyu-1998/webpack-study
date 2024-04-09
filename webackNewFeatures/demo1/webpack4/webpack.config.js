@@ -24,4 +24,18 @@ module.exports = {
       cacheDirectory: path.resolve(__dirname, ".temp_cache"),
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.(jpg|jpeg|png|gif|svg)$/,
+        loader: "url-loader",
+        options: {
+          name: "[name][hash:5].[ext]",
+          // 限制大小 1000kb
+          limit: 1024,
+          outputPath: "images",
+        },
+      },
+    ],
+  },
 };

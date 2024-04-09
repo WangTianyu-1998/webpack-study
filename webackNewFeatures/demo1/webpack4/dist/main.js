@@ -1,1 +1,105 @@
-!function(e){function r(r){for(var n,l,c=r[0],a=r[1],i=r[2],p=0,s=[];p<c.length;p++)l=c[p],Object.prototype.hasOwnProperty.call(o,l)&&o[l]&&s.push(o[l][0]),o[l]=0;for(n in a)Object.prototype.hasOwnProperty.call(a,n)&&(e[n]=a[n]);for(f&&f(r);s.length;)s.shift()();return u.push.apply(u,i||[]),t()}function t(){for(var e,r=0;r<u.length;r++){for(var t=u[r],n=!0,c=1;c<t.length;c++){var a=t[c];0!==o[a]&&(n=!1)}n&&(u.splice(r--,1),e=l(l.s=t[0]))}return e}var n={},o={1:0},u=[];function l(r){if(n[r])return n[r].exports;var t=n[r]={i:r,l:!1,exports:{}};return e[r].call(t.exports,t,t.exports,l),t.l=!0,t.exports}l.m=e,l.c=n,l.d=function(e,r,t){l.o(e,r)||Object.defineProperty(e,r,{enumerable:!0,get:t})},l.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},l.t=function(e,r){if(1&r&&(e=l(e)),8&r)return e;if(4&r&&"object"==typeof e&&e&&e.__esModule)return e;var t=Object.create(null);if(l.r(t),Object.defineProperty(t,"default",{enumerable:!0,value:e}),2&r&&"string"!=typeof e)for(var n in e)l.d(t,n,function(r){return e[r]}.bind(null,n));return t},l.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return l.d(r,"a",r),r},l.o=function(e,r){return Object.prototype.hasOwnProperty.call(e,r)},l.p="";var c=window.webpackJsonp=window.webpackJsonp||[],a=c.push.bind(c);c.push=r,c=c.slice();for(var i=0;i<c.length;i++)r(c[i]);var f=a;u.push([3,0]),t()}({3:function(e,r,t){"use strict";t.r(r);var n=t(1);Object(n.a)({}),console.log(1),console.log(2333),console.log(2222),console.log("webpack4")}});
+!(function (e) {
+  function t(t) {
+    for (
+      var r, l, c = t[0], a = t[1], i = t[2], f = 0, s = [];
+      f < c.length;
+      f++
+    )
+      (l = c[f]),
+        Object.prototype.hasOwnProperty.call(o, l) && o[l] && s.push(o[l][0]),
+        (o[l] = 0);
+    for (r in a) Object.prototype.hasOwnProperty.call(a, r) && (e[r] = a[r]);
+    for (p && p(t); s.length; ) s.shift()();
+    return u.push.apply(u, i || []), n();
+  }
+  function n() {
+    for (var e, t = 0; t < u.length; t++) {
+      for (var n = u[t], r = !0, c = 1; c < n.length; c++) {
+        var a = n[c];
+        0 !== o[a] && (r = !1);
+      }
+      r && (u.splice(t--, 1), (e = l((l.s = n[0]))));
+    }
+    return e;
+  }
+  var r = {},
+    o = { 1: 0 },
+    u = [];
+  function l(t) {
+    if (r[t]) return r[t].exports;
+    var n = (r[t] = { i: t, l: !1, exports: {} });
+    return e[t].call(n.exports, n, n.exports, l), (n.l = !0), n.exports;
+  }
+  (l.m = e),
+    (l.c = r),
+    (l.d = function (e, t, n) {
+      l.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: n });
+    }),
+    (l.r = function (e) {
+      "undefined" != typeof Symbol &&
+        Symbol.toStringTag &&
+        Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }),
+        Object.defineProperty(e, "__esModule", { value: !0 });
+    }),
+    (l.t = function (e, t) {
+      if ((1 & t && (e = l(e)), 8 & t)) return e;
+      if (4 & t && "object" == typeof e && e && e.__esModule) return e;
+      var n = Object.create(null);
+      if (
+        (l.r(n),
+        Object.defineProperty(n, "default", { enumerable: !0, value: e }),
+        2 & t && "string" != typeof e)
+      )
+        for (var r in e)
+          l.d(
+            n,
+            r,
+            function (t) {
+              return e[t];
+            }.bind(null, r)
+          );
+      return n;
+    }),
+    (l.n = function (e) {
+      var t =
+        e && e.__esModule
+          ? function () {
+              return e.default;
+            }
+          : function () {
+              return e;
+            };
+      return l.d(t, "a", t), t;
+    }),
+    (l.o = function (e, t) {
+      return Object.prototype.hasOwnProperty.call(e, t);
+    }),
+    (l.p = "");
+  var c = (window.webpackJsonp = window.webpackJsonp || []),
+    a = c.push.bind(c);
+  (c.push = t), (c = c.slice());
+  for (var i = 0; i < c.length; i++) t(c[i]);
+  var p = a;
+  u.push([4, 0]), n();
+})([
+  ,
+  ,
+  ,
+  function (e, t, n) {
+    "use strict";
+    n.r(t), (t.default = n.p + "images/wukong490a9.jpg");
+  },
+  function (e, t, n) {
+    "use strict";
+    n.r(t);
+    var r = n(1);
+    Object(r.a)({}),
+      console.log(1),
+      console.log(2333),
+      console.log(2222),
+      console.log("webpack4");
+    const o = n(3),
+      u = document.createElement("img");
+    (u.src = o), document.body.appendChild(u);
+  },
+]);
