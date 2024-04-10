@@ -1,5 +1,6 @@
 const path = require("path");
-const { experiments } = require("webpack");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { plugins } = require("../webpack4/webpack.config");
 
 module.exports = {
   mode: "production",
@@ -40,6 +41,7 @@ module.exports = {
       },
     ],
   },
+  // 是否开启引入外部资源 / 实现特性
   experiments: {
     buildHttp: {
       allowedUris: ["https://imooc-dev.youbaobao.xyz"],
@@ -48,4 +50,5 @@ module.exports = {
       // upgrade: true,
     },
   },
+  plugins: [new CleanWebpackPlugin()],
 };

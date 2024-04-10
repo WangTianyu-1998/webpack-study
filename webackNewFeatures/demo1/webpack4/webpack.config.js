@@ -1,5 +1,6 @@
 const path = require("path");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
   mode: "production",
   entry: "./src/index.js",
@@ -23,6 +24,7 @@ module.exports = {
     new HardSourceWebpackPlugin({
       cacheDirectory: path.resolve(__dirname, ".temp_cache"),
     }),
+    new CleanWebpackPlugin(),
   ],
   module: {
     rules: [

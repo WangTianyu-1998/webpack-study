@@ -1,66 +1,41 @@
 !(function (e) {
-  function t(t) {
-    for (
-      var r, l, c = t[0], a = t[1], i = t[2], f = 0, s = [];
-      f < c.length;
-      f++
-    )
-      (l = c[f]),
-        Object.prototype.hasOwnProperty.call(o, l) && o[l] && s.push(o[l][0]),
-        (o[l] = 0);
-    for (r in a) Object.prototype.hasOwnProperty.call(a, r) && (e[r] = a[r]);
-    for (p && p(t); s.length; ) s.shift()();
-    return u.push.apply(u, i || []), n();
+  var t = {};
+  function n(r) {
+    if (t[r]) return t[r].exports;
+    var o = (t[r] = { i: r, l: !1, exports: {} });
+    return e[r].call(o.exports, o, o.exports, n), (o.l = !0), o.exports;
   }
-  function n() {
-    for (var e, t = 0; t < u.length; t++) {
-      for (var n = u[t], r = !0, c = 1; c < n.length; c++) {
-        var a = n[c];
-        0 !== o[a] && (r = !1);
-      }
-      r && (u.splice(t--, 1), (e = l((l.s = n[0]))));
-    }
-    return e;
-  }
-  var r = {},
-    o = { 1: 0 },
-    u = [];
-  function l(t) {
-    if (r[t]) return r[t].exports;
-    var n = (r[t] = { i: t, l: !1, exports: {} });
-    return e[t].call(n.exports, n, n.exports, l), (n.l = !0), n.exports;
-  }
-  (l.m = e),
-    (l.c = r),
-    (l.d = function (e, t, n) {
-      l.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: n });
+  (n.m = e),
+    (n.c = t),
+    (n.d = function (e, t, r) {
+      n.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: r });
     }),
-    (l.r = function (e) {
+    (n.r = function (e) {
       "undefined" != typeof Symbol &&
         Symbol.toStringTag &&
         Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }),
         Object.defineProperty(e, "__esModule", { value: !0 });
     }),
-    (l.t = function (e, t) {
-      if ((1 & t && (e = l(e)), 8 & t)) return e;
+    (n.t = function (e, t) {
+      if ((1 & t && (e = n(e)), 8 & t)) return e;
       if (4 & t && "object" == typeof e && e && e.__esModule) return e;
-      var n = Object.create(null);
+      var r = Object.create(null);
       if (
-        (l.r(n),
-        Object.defineProperty(n, "default", { enumerable: !0, value: e }),
+        (n.r(r),
+        Object.defineProperty(r, "default", { enumerable: !0, value: e }),
         2 & t && "string" != typeof e)
       )
-        for (var r in e)
-          l.d(
-            n,
+        for (var o in e)
+          n.d(
             r,
+            o,
             function (t) {
               return e[t];
-            }.bind(null, r)
+            }.bind(null, o)
           );
-      return n;
+      return r;
     }),
-    (l.n = function (e) {
+    (n.n = function (e) {
       var t =
         e && e.__esModule
           ? function () {
@@ -69,37 +44,21 @@
           : function () {
               return e;
             };
-      return l.d(t, "a", t), t;
+      return n.d(t, "a", t), t;
     }),
-    (l.o = function (e, t) {
+    (n.o = function (e, t) {
       return Object.prototype.hasOwnProperty.call(e, t);
     }),
-    (l.p = "");
-  var c = (window.webpackJsonp = window.webpackJsonp || []),
-    a = c.push.bind(c);
-  (c.push = t), (c = c.slice());
-  for (var i = 0; i < c.length; i++) t(c[i]);
-  var p = a;
-  u.push([4, 0]), n();
+    (n.p = ""),
+    n((n.s = 0));
 })([
-  ,
-  ,
-  ,
-  function (e, t, n) {
-    "use strict";
-    n.r(t), (t.default = n.p + "images/wukong490a9.jpg");
-  },
   function (e, t, n) {
     "use strict";
     n.r(t);
-    var r = n(1);
-    Object(r.a)({}),
-      console.log(1),
-      console.log(2333),
-      console.log(2222),
-      console.log("webpack4");
-    const o = n(3),
-      u = document.createElement("img");
-    (u.src = o), document.body.appendChild(u);
+    n(1);
+    console.log("aaa");
+  },
+  function (e, t) {
+    console.log("libs");
   },
 ]);
