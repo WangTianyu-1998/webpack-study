@@ -16,6 +16,7 @@
     "chokidar": "^3.6.0",
     "commander": "^12.0.0",
     "detect-port": "^1.5.1",
+    "inquirer": "^8.2.6",
     "semver": "^7.6.0"
   }
 }

@@ -1,4 +1,5 @@
 const detect = require("detect-port");
+const inquirer = require("inquirer");
 
 // console.log("DevService");
 // console.log(process.argv);
@@ -10,7 +11,6 @@ const detect = require("detect-port");
 //   console.log("子进程收到消息", msg);
 //   process.send("hello parent process!");
 // });
-
 function getPort() {
   const DEFAULT_PORT = 8000;
   const params = process.argv.slice(2);
@@ -25,17 +25,46 @@ function getPort() {
   return paramsObj.port || DEFAULT_PORT;
 }
 
-const port = getPort();
-
-// 检测端口是否被占用
-detect(port)
-  .then((_port) => {
-    if (port == _port) {
-      console.log(port);
-    } else {
-      console.log(`端口${port}被占用`);
-    }
-  })
-  .catch((err) => {
-    console.log(err);
+function onInquirer(newPort, port) {
+  return new Promise((resolve, reject) => {
+    inquirer
+      .prompt([
+        {
+          type: "confirm",
+          name: "answer",
+          message: `端口${port}被占用，是否使用${newPort}端口`,
+          choices: [
+            {
+              name: "yes",
+              value: true,
+            },
+            {
+              name: "no",
+              value: false,
+            },
+          ],
+        },
+      ])
+      .then((answers) => {
+        resolve(answers);
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
+}
+
+(async () => {
+  const port = getPort();
+
+  // 检测端口是否被占用
+  const newPort = await detect(port);
+  console.log(newPort);
+  if (newPort === port) {
+    console.log(port);
+  } else {
+    // 命令行交互
+    const { answer } = await onInquirer(newPort, port);
+    console.log(answer);
+  }
+})();
