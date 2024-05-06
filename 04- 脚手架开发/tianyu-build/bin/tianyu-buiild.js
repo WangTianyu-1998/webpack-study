@@ -21,12 +21,14 @@ const MIN_NODE_VERSION = "18.0.0";
 
     program
       .command("start")
+      .option("-c, --config <config>", "指定配置文件路径")
       .description("启动项目")
       .allowUnknownOption() // 允许未知参数
       .action(startServer);
 
     program
       .command("build")
+      .option("-c, --config <config>", "指定配置文件")
       .description("打包项目")
       .allowUnknownOption() // 允许未知参数
       .action(buildProject);
