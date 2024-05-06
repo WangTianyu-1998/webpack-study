@@ -1,0 +1,43 @@
+{
+  "name": "elm",
+  "version": "2.0.1",
+  "description": "vue2-elm",
+  "author": "cangdu <1264889788@qq.com>",
+  "private": true,
+  "license": "GPL",
+  "scripts": {
+    "serve": "cross-env MEASURE=false vue-cli-service serve",
+    "build": "cross-env MEASURE=true vue-cli-service build",
+    "dll": "webpack --config build/webpack.dll.config.js"
+  },
+  "dependencies": {
+    "better-scroll": "1.15.2",
+    "fastclick": "^1.0.6",
+    "iscroll": "^5.2.0",
+    "node-sass": "^9.0.0",
+    "showdown": "^1.6.4",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^5.0.0-beta.2",
+    "@vue/compiler-sfc": "^3.2.29",
+    "add-asset-html-webpack-plugin": "^6.0.0",
+    "cross-env": "^7.0.3",
+    "glob": "^10.3.12",
+    "image-webpack-loader": "^8.1.0",
+    "purgecss-webpack-plugin": "^6.0.0",
+    "sass": "^1.72.0",
+    "sass-loader": "^14.1.1",
+    "speed-measure-webpack-plugin": "^1.5.0",
+    "thread-loader": "^4.0.2",
+    "webpack": "^5.91.0",
+    "webpack-bundle-analyzer": "^4.10.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  }
+}
