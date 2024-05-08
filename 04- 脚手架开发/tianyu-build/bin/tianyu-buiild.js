@@ -1,10 +1,21 @@
 #!/usr/bin/env node
+// 最先执行log文件
+checkDebug()
+
 const { program } = require("commander");
 const checkNode = require("../lib/checkNode");
 const startServer = require("../lib/start/startServer");
 const pkj = require("../package.json");
 const buildProject = require("../lib/build/buildProject");
 const MIN_NODE_VERSION = "18.0.0";
+
+function checkDebug() {
+  if (process.argv.includes('--debug') || process.argv.includes('-d')) {
+    process.env.LOG_LEVELS = 'verbose'
+  } else {
+    process.env.LOG_LEVELS = 'info'
+  }
+}
 
 (async () => {
   try {
@@ -32,6 +43,10 @@ const MIN_NODE_VERSION = "18.0.0";
       .description("打包项目")
       .allowUnknownOption() // 允许未知参数
       .action(buildProject);
+
+    program
+      .option("-d, --debug", "开启调试模式")
+
 
     // 解析命令行参数
     program.parse(process.argv);

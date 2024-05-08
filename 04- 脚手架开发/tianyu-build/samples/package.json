@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tianyu-build start --config tianyu-build.json"
+    "dev": "tianyu-build start -d"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "fast-glob": "^3.3.2"
+  }
 }

@@ -1,12 +1,13 @@
 const chokidar = require("chokidar");
 const path = require("path");
 const cp = require("child_process");
-
+const getConfigFile = require("../utils/getConfigFile");
+const log = require('../utils/log');
 let child;
 
 // 启动服务
-function runServer(opts) {
-  const { config = {} } = opts;
+function runServer(opts = {}) {
+  const { config = '' } = opts;
   // 启动子进程的方式
   const childFile = path.resolve(__dirname, "./DevService.js");
   // 双向通信
@@ -22,6 +23,7 @@ function runServer(opts) {
 
 // 文件变化后的回调
 function onChange() {
+  log.verbose("config", '变化了 !!!!!');
   // 关闭子进程
   child.kill();
   // 重新启动服务
@@ -29,7 +31,7 @@ function onChange() {
 }
 // 文件监听
 function runWatcher() {
-  const configPath = path.resolve(__dirname, "./config.json");
+  const configPath = getConfigFile();
   chokidar
     .watch(configPath)
     .on("change", onChange)
