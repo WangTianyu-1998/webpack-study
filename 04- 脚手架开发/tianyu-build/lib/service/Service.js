@@ -2,29 +2,34 @@ const path = require("path");
 const fs = require('fs');
 const log = require('../utils/log');
 const getConfigFile = require("../utils/getConfigFile");
+const constant = require('./const');
+
+const HOOK_KEYS = [
+  constant.HOOK_START
+]
 class Service {
   constructor(opts) {
     this.args = opts;
     this.config = {};
     this.hooks = {};
-    // console.log(opts, "@opts");
     this.dir = process.cwd();
   }
 
   async start() {
-    this.resolveConfig();
+    await this.resolveConfig();
+    this.registerHooks();
+    await this.emitHooks(constant.HOOK_START)
   }
 
   // 解析配置文件
-  resolveConfig() {
+  async resolveConfig() {
     const { config = '' } = this.args;
-    const configPath = this.changeAbsolutePath(config);
+    const configPath = await this.changeAbsolutePath(config);
     // console.log(configPath, "解析配置文件");
   }
 
   // 将文件转化为绝对路径以及读取文件配置
-  changeAbsolutePath(configPath) {
-    console.log(configPath);
+  async changeAbsolutePath(configPath) {
     let configFilePath = "";
     if (configPath) {
       // 能进来说明通过--config制定了文件名称
@@ -37,26 +42,57 @@ class Service {
       // 能进来说明没有指定--config,此时就需要从项目文件中快速查找指定的文件名称
       // 此时就需要使用fast-glob absolute转化为绝对路径
       const configFile = getConfigFile(this.dir)
-      console.log(configFile, '@@@configFile');
       if (configFile && fs.existsSync(configFile)) {
+        const isMjs = configFile.endsWith('mjs');
+        if (isMjs) {
+          // ESModule规范, 需要使用import读取
+          this.config = (await import(configFile)).default;
+        } else {
+          // commonjs规范 也使用 require读取
+          this.config = require(configFile);
+        }
         configFilePath = configFile;
-        // 读取文件内容
-        // 如果是JSON文件直接读取 使用require读取
-        // 如果是js文件使用commonjs规范 也使用 require读取
-        // 如果js文件中使用ESModule规范,则需要将文件转化为mjs文件再用require读取
-        // 所以这里建议交给用户自己处理,但是要遵守规范
-        this.config = require(configFilePath);
-        // console.log(this.config);
-        log.verbose("config", this.config);
-        // log.info("config", this.config);
-        // log.error("config", this.config);
+        // log.verbose('config', this.config);
 
       } else {
         console.log('配置文件不存在, 终止执行');
         process.exit(1);
       }
+      // 执行configResolved hooks
     }
     return configFilePath;
+  }
+
+  // 注册hooks
+  registerHooks() {
+    const { hooks } = this.config
+    if (hooks && hooks?.length) {
+      hooks.forEach(hook => {
+        const [key, fn] = hook
+        if (key && fn && typeof fn === 'function' && typeof key === 'string' && HOOK_KEYS.includes(key)) {
+          const existHook = this.hooks[key]
+          if (!existHook) {
+            this.hooks[key] = []
+          }
+          this.hooks[key].push(fn)
+        }
+      })
+    }
+    // log.verbose('hooks!!!', this.hooks)
+  }
+
+  // 执行hooks
+  async emitHooks(hooksName) {
+    const hooks = this.hooks[hooksName]
+    if (hooks) {
+      for (const hook of hooks) {
+        try {
+          await hook(this)
+        } catch (error) {
+          log.error('emitHooks', error)
+        }
+      }
+    }
   }
 }
 
