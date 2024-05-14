@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require('fs');
 const log = require('../utils/log');
 const getConfigFile = require("../utils/getConfigFile");
+const loadModule = require("../utils/loadModule");
 const constant = require('./const');
 
 const HOOK_KEYS = [
@@ -17,7 +18,7 @@ class Service {
 
   async start() {
     await this.resolveConfig();
-    this.registerHooks();
+    await this.registerHooks();
     await this.emitHooks(constant.HOOK_START)
   }
 
@@ -42,18 +43,9 @@ class Service {
       // 能进来说明没有指定--config,此时就需要从项目文件中快速查找指定的文件名称
       // 此时就需要使用fast-glob absolute转化为绝对路径
       const configFile = getConfigFile(this.dir)
-      if (configFile && fs.existsSync(configFile)) {
-        const isMjs = configFile.endsWith('mjs');
-        if (isMjs) {
-          // ESModule规范, 需要使用import读取
-          this.config = (await import(configFile)).default;
-        } else {
-          // commonjs规范 也使用 require读取
-          this.config = require(configFile);
-        }
+      if (configFile) {
         configFilePath = configFile;
-        // log.verbose('config', this.config);
-
+        this.config = await loadModule(configFile)
       } else {
         console.log('配置文件不存在, 终止执行');
         process.exit(1);
@@ -64,21 +56,36 @@ class Service {
   }
 
   // 注册hooks
-  registerHooks() {
+  async registerHooks() {
     const { hooks } = this.config
     if (hooks && hooks?.length) {
-      hooks.forEach(hook => {
+      for (const hook of hooks) {
         const [key, fn] = hook
-        if (key && fn && typeof fn === 'function' && typeof key === 'string' && HOOK_KEYS.includes(key)) {
-          const existHook = this.hooks[key]
-          if (!existHook) {
-            this.hooks[key] = []
+        const verify = key && fn && HOOK_KEYS.includes(key) && typeof key === 'string'
+        if (verify) {
+          // 是js 或者 mjs 配置文件
+          if (typeof fn === 'function') {
+            const existHook = this.hooks[key]
+            if (!existHook) {
+              this.hooks[key] = []
+            }
+            this.hooks[key].push(fn)
           }
-          this.hooks[key].push(fn)
+          // 是JSON配置文件
+          else if (typeof fn === 'string') {
+            // 读取文件内容
+            const f = await loadModule(fn)
+            const existHook = this.hooks[key]
+            if (!existHook) {
+              this.hooks[key] = []
+            }
+            this.hooks[key].push(f)
+          }
         }
-      })
+      }
+
     }
-    // log.verbose('hooks!!!', this.hooks)
+    log.verbose('hooks!!!', this.hooks)
   }
 
   // 执行hooks
