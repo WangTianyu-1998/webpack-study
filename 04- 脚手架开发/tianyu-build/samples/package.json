@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tianyu-build start -d"
+    "dev": "tianyu-build start -d "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "fast-glob": "^3.3.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
   }
 }

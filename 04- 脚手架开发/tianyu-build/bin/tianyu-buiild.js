@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // 最先执行log文件
-checkDebug()
+checkDebug();
 
 const { program } = require("commander");
 const checkNode = require("../lib/checkNode");
@@ -10,10 +10,10 @@ const buildProject = require("../lib/build/buildProject");
 const MIN_NODE_VERSION = "18.0.0";
 
 function checkDebug() {
-  if (process.argv.includes('--debug') || process.argv.includes('-d')) {
-    process.env.LOG_LEVELS = 'verbose'
+  if (process.argv.includes("--debug") || process.argv.includes("-d")) {
+    process.env.LOG_LEVELS = "verbose";
   } else {
-    process.env.LOG_LEVELS = 'info'
+    process.env.LOG_LEVELS = "info";
   }
 }
 
@@ -33,6 +33,7 @@ function checkDebug() {
     program
       .command("start")
       .option("-c, --config <config>", "指定配置文件路径")
+      .option("--custom-webpack-path <customWebpackPath>", "自定义webpack路径")
       .description("启动项目")
       .allowUnknownOption() // 允许未知参数
       .action(startServer);
@@ -40,13 +41,12 @@ function checkDebug() {
     program
       .command("build")
       .option("-c, --config <config>", "指定配置文件")
+      .option("--custom-webpack-path <customWebpackPath>", "自定义webpack路径")
       .description("打包项目")
       .allowUnknownOption() // 允许未知参数
       .action(buildProject);
 
-    program
-      .option("-d, --debug", "开启调试模式")
-
+    program.option("-d, --debug", "开启调试模式");
 
     // 解析命令行参数
     program.parse(process.argv);

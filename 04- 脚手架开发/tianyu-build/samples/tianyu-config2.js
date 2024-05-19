@@ -1,14 +1,18 @@
 module.exports = {
-    "entry": "src/index.js",
-    "plugins": [
-        "tianyu-build-text"
+  entry: "src/index.js",
+  plugins: ["tianyu-build-text"],
+  hooks: [
+    [
+      "start",
+      (context) => {
+        // console.log('startHooks被执行了', context)
+      },
     ],
-    hooks: [
-        ['start', (context) => {
-            console.log('startHooks被执行了', context)
-        }],
-        ['configResolved', (context) => {
-            console.log('configResolved', context)
-        }]
-    ]
-}
+    [
+      "configResolved",
+      (context) => {
+        // console.log('configResolved', context)
+      },
+    ],
+  ],
+};

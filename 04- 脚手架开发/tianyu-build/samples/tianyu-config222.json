@@ -1,0 +1,19 @@
+{
+    "entry": "src/index.js",
+    "plugins": [
+        "tianyu-build-text",
+        ["tianyu-build-text",{
+            "a":1,
+            "b":2
+        }],
+        ["./plugins/tianyu-plugin.js",{
+            "a":1,
+            "b":2,
+            "c":3
+        }]
+    ],
+    "hooks": [
+        ["start", "./hooks/tianyu-build-start-hooks.js"],
+        ["start", "./hooks/tianyu-build-start-hooks.mjs"]
+    ]
+}
